@@ -125,7 +125,7 @@ Efficiency Note: The developer intend to program it easy which is trade off with
     
     outputFile = "output/urdmeMiningPartialWindow_" + str(WIN_SIZE) + "_" + str(MIN_SUPPORT) + "_" + str(STOP_WINDOW) + "_" + str(START_WINDOW) + ".json"
     f = open(outputFile,'w')
-    f.write(json.dumps(outputData))
+    f.write(outputData)
     f.close()
     print("Complete!!!")
     sc.stop()
