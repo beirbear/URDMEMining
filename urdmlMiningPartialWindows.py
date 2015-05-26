@@ -123,9 +123,9 @@ Efficiency Note: The developer intend to program it easy which is trade off with
     print("\033[92m" + outputData + "\033[0m")
 
     
-    outputFile = "output/urdmeMiningPartialWindow_" + str(WIN_SIZE) + "_" + str(MIN_SUPPORT) + "_" + str(STOP_WINDOW) + "_" + str(START_WINDOW) + ".json"
+    outputFile = "output/urdmeMiningPartialWindow_" + str(WIN_SIZE) + "_" + str(MIN_SUPPORT) + "_" + str(START_WINDOW) + "_" + str(STOP_WINDOW) + ".json"
     f = open(outputFile,'w')
-    f.write(outputData)
+    f.write(outputData + '\n')
     f.close()
     print("Complete!!!")
     sc.stop()
