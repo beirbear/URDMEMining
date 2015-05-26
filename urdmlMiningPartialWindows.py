@@ -76,9 +76,12 @@ if __name__ == "__main__":
         print("Usage: urdmeMiningPartialWindow <winSize> <minSupport> <startRange:inclusion> <stopRange:exclusion>\nThe number of range can be 0 to 99 (Subject to metadata).", file=sys.stderr)
         exit(-1)
 
+    print("NOTE: The division of \"(stopWindowPosition - startWindowPosition) / windowSize\" must contain no fraction.\nOtherwise, it will be ignore!
+")
     MIN_SUPPORT = int(sys.argv[2])
     START_WINDOW = int(sys.argv[3])
     STOP_WINDOW = int(sys.argv[4])
+    WIN_SIZE = int(sys.argv[1])
 
     if STOP_WINDOW < START_WINDOW:
         print("Invalid wondow range!")
@@ -86,13 +89,13 @@ if __name__ == "__main__":
 
     windowGroup = []
 
-    for i in range( START_WINDOW, STOP_WINDOW):
-        '''
+    '''
 Efficiency Note: The developer intend to program it easy which is trade off with the efficiency of the algorithm that need to go throught every file when the createTransaction() is called. This can be optimize, but the developer would like to point out and note to clarify why this step take certain amount of time. 
-        '''
-
-        windowGroup.append(createTransaction(np.arange(i * int(sys.argv[1]), i * int(sys.argv[1]) + int(sys.argv[1]) , 1)))
-        print("Window Frame: %s" % np.arange(i * int(sys.argv[1]), i * int(sys.argv[1]) + int(sys.argv[1]) , 1))
+    '''
+    for i in range( (STOP_WINDOW -  START_WINDOW) / WIN_SIZE ):
+        
+        windowGroup.append(createTransaction(range(i * WIN_SIZE + START_WINDOW, i * WIN_SIZE + START_WINDOW + WIN_SIZE)))
+        print("Window Frame: %s" % range(i * WIN_SIZE + START_WINDOW, i * WIN_SIZE + START_WINDOW + WIN_SIZE))
 
     sc = SparkContext( appName="urdmeMining",  master=os.environ['MASTER'])
 
@@ -104,4 +107,11 @@ Efficiency Note: The developer intend to program it easy which is trade off with
     result = rddWindows.map(frequentSet).collect()
 
     print(result)
+
+    '''
+    outputFile = "urdmeMiningPartialWindow_" + WIN_SIZE + "_" + MIN_SOPPORT + "_" + STOP_WINDOW + "_" + START_WINDOW + ".json"
+    f = open(outpuFile,'w')
+    f.write(json.dumps(outputData))
+    f.close()
+    '''
     sc.stop()

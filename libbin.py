@@ -64,7 +64,7 @@ def getSpecieBin(specieType):
 
 
 def createTransaction(windowRange=None):
-    
+     
     # Get required data
     range_k1 = getRateBin("k1")
     range_k2 = getRateBin("k2")
@@ -79,7 +79,7 @@ def createTransaction(windowRange=None):
     range_mRNA = getSpecieBin("mRNA")
     range_protein = getSpecieBin("protein")
     print("Get specie band complete")
-
+    
     if windowRange is None:
         print("Get every window frame")
 

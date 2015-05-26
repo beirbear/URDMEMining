@@ -1,0 +1,22 @@
+The aim of this project is to find the frequent item set of URDMEObjects which has been extracted from the SWIFT Bucket. The exttracted data is located in the data folder.
+
+The users can execute the application by invoking
+
+./urdmeMiningPatialWindow.py <windowSize> <minimumSupport> <startWindowPosition> <stopWindowPosition>
+
+The window range can be 0 to 99 (Subject to meta data).
+
+NOTE: The division of "(stopWindowPosition - startWindowPosition) / windowSize" must contain no fraction. Otherwise, it will be ignore!
+
+
+The output of the data will be write to file in a local folder. The output file name is "urdmeMiningPartialWindow_<windowSize>_<minimumSupport>_<startWindowPosition>_<stopWindowPosition>.json". The data can be import and query based on user purpose on the application that user perfer.
+
+
+
+This project also require some external library which "pymining" an "numpy"
+
+pymining can be downloaded from "https://github.com/bartdag/pymining.git"
+
+numpy can be downlaoded from "http://github.com/numpy/numpy.git"
+
+
