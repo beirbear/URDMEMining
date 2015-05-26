@@ -1,11 +1,4 @@
 #!/usr/bin/env python
-'''
-Caution!!!!
-When user run this code. They might face with a problem that SparkBuffer is not large enought to hold a sheer volume of data in this circumstance.
-
-According to this, the developer introduce an alternative application name "urdmeMiningPartialWindows" which is locaed in the same folder of this application.
-
-'''
 
 
 from __future__ import print_function
@@ -24,6 +17,8 @@ import numpy as np
 
 MIN_SUPPORT = 0
 MIN_DEPENDENT_V = 2
+START_WINDOW = -1
+STOP_WINDOW = -1
 
 def validDependent(input):
     validNumber = 0
@@ -77,30 +72,36 @@ def filterResult(input):
     return resultSet
 
 if __name__ == "__main__":
-    if len(sys.argv) != 3:
-        print("Usage: urdmeMining <winSize> <minSupport>", file=sys.stderr)
+    if len(sys.argv) != 5:
+        print("Usage: urdmeMiningPartialWindow <winSize> <minSupport> <startRange:inclusion> <stopRange:exclusion>\nThe number of range can be 0 to 99 (Subject to metadata).", file=sys.stderr)
         exit(-1)
 
     MIN_SUPPORT = int(sys.argv[2])
+    START_WINDOW = int(sys.argv[3])
+    STOP_WINDOW = int(sys.argv[4])
+
+    if STOP_WINDOW < START_WINDOW:
+        print("Invalid wondow range!")
+        quit
 
     windowGroup = []
 
-    for i in range( int(WIN_SIZE/ 40.0 / int(sys.argv[1]))):
-        # for development, used when we want to limit the number of sample set
-        # if i >= 3:
-        #    break
-
-'''
+    for i in range( START_WINDOW, STOP_WINDOW):
+        '''
 Efficiency Note: The developer intend to program it easy which is trade off with the efficiency of the algorithm that need to go throught every file when the createTransaction() is called. This can be optimize, but the developer would like to point out and note to clarify why this step take certain amount of time. 
-'''
+        '''
+
         windowGroup.append(createTransaction(np.arange(i * int(sys.argv[1]), i * int(sys.argv[1]) + int(sys.argv[1]) , 1)))
         print("Window Frame: %s" % np.arange(i * int(sys.argv[1]), i * int(sys.argv[1]) + int(sys.argv[1]) , 1))
 
     sc = SparkContext( appName="urdmeMining",  master=os.environ['MASTER'])
 
     rddWindows = sc.parallelize(windowGroup)
-
+    '''
+    Note: Cannot do reduceByKey. Might be something here. Will check later
     result = rddWindows.map(frequentSet).reduceByKey(mergeResult).collect()
+    '''
+    result = rddWindows.map(frequentSet).collect()
 
     print(result)
     sc.stop()
