@@ -2,7 +2,7 @@
 
 
 from __future__ import print_function
-
+import time
 import sys
 import json
 import os
@@ -104,10 +104,12 @@ if __name__ == "__main__":
     '''
 Efficiency Note: The developer intend to program it easy which is trade off with the efficiency of the algorithm that need to go throught every file when the createTransaction() is called. This can be optimize, but the developer would like to point out and note to clarify why this step take certain amount of time. 
     '''
+    creationStart = time.time()
     for i in range( (STOP_WINDOW -  START_WINDOW) / WIN_SIZE ):
         
         windowGroup.append(createTransaction(range(i * WIN_SIZE + START_WINDOW, i * WIN_SIZE + START_WINDOW + WIN_SIZE)))
         print("Window Frame: %s" % range(i * WIN_SIZE + START_WINDOW, i * WIN_SIZE + START_WINDOW + WIN_SIZE))
+    creationStop = time.time()
 
     sc = SparkContext( appName="urdmeMining",  master=os.environ['MASTER'])
 
@@ -117,11 +119,13 @@ Efficiency Note: The developer intend to program it easy which is trade off with
     result = rddWindows.map(frequentSet).reduceByKey(mergeResult).collect()
     '''
     result = rddWindows.map(frequentSet).collect()
+    processingStop = time.time()
 
     outputData = convertFrozenSetToJson(result)
 
     print("\033[92m" + outputData + "\033[0m")
-
+    print("Creating transaction for %f seconds" % (creationStop - creationStart))
+    print("Processing transaction for %f seconds" % (time.time() - creationStop))
         
     outputFile = "output/urdmeMiningPartialWindow_" + str(WIN_SIZE) + "_" + str(MIN_SUPPORT) + "_" + str(START_WINDOW) + "_" + str(STOP_WINDOW) + ".json"
     f = open(outputFile,'w')
