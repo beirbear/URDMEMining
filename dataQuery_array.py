@@ -30,6 +30,8 @@ def getAllData():
                 _dataOutput = []
                 _winPos = -1
                 for j in range(len(_dataSeries)):
+                    #if _dataSeries[j][INTERESTED_PARAMETER] > 500:
+                    #    print(_dataSeries[j][INTERESTED_PARAMETER])
                     _dataOutput.append("[" + str(i) + "," + str(j) + "," + str(_dataSeries[j][INTERESTED_PARAMETER]) + "]")
                     if _winPos < _dataSeries[j]['start_pos']:
                         _pos = _dataSeries[j]['start_pos']
@@ -83,7 +85,7 @@ if __name__ == "__main__":
     initiateList()
     # Get data from the file
     getAllData()
-
+    '''
     # Write data series out
     f = open('proteinSeries.txt','w')
     f.write(str(proteinLists))
@@ -103,4 +105,4 @@ if __name__ == "__main__":
     f = open('poSeries.txt','w')
     f.write(str(poLists))
     f.close()
-
+    '''

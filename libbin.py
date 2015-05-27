@@ -142,97 +142,118 @@ def createTransaction(windowRange=None):
 				quit()
 
 
-
 		sWord = ""
 		for sType in [ "pf", "po", "mRNA", "protein" ]:
-			sWord = sType
-			if sType == "pf":
-				genericRange = range_pf
-				sWord = "Pf"
-			elif sType == "po":
-				genericRange = range_po
-				sWord = "Po"
-			elif sType == "mRNA":
-				genericRange = range_mRNA
-			elif sType == "protein":
-				genericRange = range_protein
-			else:
-				print("Range Error")
-				quit()
+		    sWord = sType
+		    if sType == "pf":
+		        genericRange = range_pf
+		        sWord = "Pf"
+		    elif sType == "po":
+		        genericRange = range_po
+		        sWord = "Po"
+                    elif sType == "mRNA":
+                        genericRange = range_mRNA
+                    elif sType == "protein":
+                        genericRange = range_protein
+                    else:
+                        print("Range Error")
+                        quit()
 
-                # Loop for time series
-                sTime = data['data_' +  sWord]
-                if windowRange is None:
-                    for i in range(len(sTime)):
-                        if sTime[i][CONTROL_PARAM] < genericRange[1]:
-                            record.append(sWord + "_B0_F" + str(i))
-                            continue
-                        elif sTime[i][CONTROL_PARAM] < genericRange[2]:
-                            record.append(sWord + "_B1_F" + str(i))
-                            continue
-                        elif sTime[i][CONTROL_PARAM] < genericRange[3]:
-                            record.append(sWord + "_B2_F" + str(i))
-                            continue
-                        elif sTime[i][CONTROL_PARAM] < genericRange[4]:
-                            record.append(sWord + "_B3_F" + str(i))
-                            continue
-                        elif sTime[i][CONTROL_PARAM] < genericRange[5]:
-                            record.append(sWord + "_B4_F" + str(i))
-                            continue
-                        elif sTime[i][CONTROL_PARAM] < genericRange[6]:
-                            record.append(sWord + "_B5_F" + str(i))
-                            continue
-                        elif sTime[i][CONTROL_PARAM] < genericRange[7]:
-                            record.append(sWord + "_B6_F" + str(i))
-                            continue
-                        elif sTime[i][CONTROL_PARAM] < genericRange[8]:
-                            record.append(sWord + "_B7_F" + str(i))
-                            continue
-                        elif sTime[i][CONTROL_PARAM] <= genericRange[9]:
-                            record.append(sWord + "_B8_F" + str(i))
-                            continue
-                        else:
-                            print("Split Band Error")
-                            print(sType)
-                            print(genericRange)
-                            print(sTime[i][CONTROL_PARAM])
-                            quit()
-                else:
-                    for i in windowRange:
-                        if sTime[i][CONTROL_PARAM] < genericRange[1]:
-                            record.append(sWord + "_B0_F" + str(i))
-                            continue
-                        elif sTime[i][CONTROL_PARAM] < genericRange[2]:
-                            record.append(sWord + "_B1_F" + str(i))
-                            continue
-                        elif sTime[i][CONTROL_PARAM] < genericRange[3]:
-                            record.append(sWord + "_B2_F" + str(i))
-                            continue
-                        elif sTime[i][CONTROL_PARAM] < genericRange[4]:
-                            record.append(sWord + "_B3_F" + str(i))
-                            continue
-                        elif sTime[i][CONTROL_PARAM] < genericRange[5]:
-                            record.append(sWord + "_B4_F" + str(i))
-                            continue
-                        elif sTime[i][CONTROL_PARAM] < genericRange[6]:
-                            record.append(sWord + "_B5_F" + str(i))
-                            continue
-                        elif sTime[i][CONTROL_PARAM] < genericRange[7]:
-                            record.append(sWord + "_B6_F" + str(i))
-                            continue
-                        elif sTime[i][CONTROL_PARAM] < genericRange[8]:
-                            record.append(sWord + "_B7_F" + str(i))
-                            continue
-                        elif sTime[i][CONTROL_PARAM] <= genericRange[9]:
-                            record.append(sWord + "_B8_F" + str(i))
-                            continue
-                        else:
-                            print("Split Band Error")
-                            print(sType)
-                            print(genericRange)
-                            print(sTime[i][CONTROL_PARAM])
-                            quit()
-
+                    # Loop for time series
+                    sTime = data['data_' +  sWord]
+                    specieCounter = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                    if windowRange is None:
+                        for i in range(len(sTime)):
+                            if sTime[i][CONTROL_PARAM] < genericRange[1]:
+                                record.append(sWord + "_B0_F" + str(i))
+                                specieCounter[0] += 1
+                                continue
+                            elif sTime[i][CONTROL_PARAM] < genericRange[2]:
+                                record.append(sWord + "_B1_F" + str(i))
+                                specieCounter[1] += 1
+                                continue
+                            elif sTime[i][CONTROL_PARAM] < genericRange[3]:
+                                record.append(sWord + "_B2_F" + str(i))
+                                specieCounter[2] += 1
+                                continue
+                            elif sTime[i][CONTROL_PARAM] < genericRange[4]:
+                                record.append(sWord + "_B3_F" + str(i))
+                                specieCounter[3] += 1
+                                continue
+                            elif sTime[i][CONTROL_PARAM] < genericRange[5]:
+                                record.append(sWord + "_B4_F" + str(i))
+                                specieCounter[4] += 1
+                                continue
+                            elif sTime[i][CONTROL_PARAM] < genericRange[6]:
+                                record.append(sWord + "_B5_F" + str(i))
+                                specieCounter[5] += 1
+                                continue
+                            elif sTime[i][CONTROL_PARAM] < genericRange[7]:
+                                record.append(sWord + "_B6_F" + str(i))
+                                specieCounter[6] += 1
+                                continue
+                            elif sTime[i][CONTROL_PARAM] < genericRange[8]:
+                                record.append(sWord + "_B7_F" + str(i))
+                                specieCounter[7] += 1
+                                continue
+                            elif sTime[i][CONTROL_PARAM] <= genericRange[9]:
+                                record.append(sWord + "_B8_F" + str(i))
+                                specieCounter[8] += 1
+                                continue
+                            else:
+                                print("Split Band Error")
+                                print(sType)
+                                print(genericRange)
+                                print(sTime[i][CONTROL_PARAM])
+                                quit()
+                    else:
+                        for i in windowRange:                            
+                            if sTime[i][CONTROL_PARAM] < genericRange[1]:
+                                record.append(sWord + "_B0_F" + str(i))
+                                specieCounter[0] += 1
+                                continue
+                            elif sTime[i][CONTROL_PARAM] < genericRange[2]:
+                                record.append(sWord + "_B1_F" + str(i))
+                                specieCounter[1] += 1
+                                continue
+                            elif sTime[i][CONTROL_PARAM] < genericRange[3]:
+                                record.append(sWord + "_B2_F" + str(i))
+                                specieCounter[2] += 1
+                                continue
+                            elif sTime[i][CONTROL_PARAM] < genericRange[4]:
+                                record.append(sWord + "_B3_F" + str(i))
+                                specieCounter[3] += 1
+                                continue
+                            elif sTime[i][CONTROL_PARAM] < genericRange[5]:
+                                record.append(sWord + "_B4_F" + str(i))
+                                specieCounter[4] += 1
+                                continue
+                            elif sTime[i][CONTROL_PARAM] < genericRange[6]:
+                                record.append(sWord + "_B5_F" + str(i))
+                                specieCounter[5] += 1
+                                continue
+                            elif sTime[i][CONTROL_PARAM] < genericRange[7]:
+                                record.append(sWord + "_B6_F" + str(i))
+                                specieCounter[6] += 1
+                                continue
+                            elif sTime[i][CONTROL_PARAM] < genericRange[8]:
+                                record.append(sWord + "_B7_F" + str(i))
+                                specieCounter[7] += 1
+                                continue
+                            elif sTime[i][CONTROL_PARAM] <= genericRange[9]:
+                                record.append(sWord + "_B8_F" + str(i))
+                                specieCounter[8] += 1
+                                continue
+                            else:
+                                print("Split Band Error")
+                                print(sType)
+                                print(genericRange)
+                                print(sTime[i][CONTROL_PARAM])
+                                quit()
+                    #if specieCounter[8] > 0:
+                    #    print("Band 8 found!!!")
+                    #    quit()
+                    #print("Specie frequency: %s" % str(specieCounter))
 
                 tmpTransaction.append(tuple(record))
     return tuple(tmpTransaction)

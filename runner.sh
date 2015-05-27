@@ -10,3 +10,5 @@
 ./urdmlMiningPartialWindows.py 10 1000 70 80
 ./urdmlMiningPartialWindows.py 10 1000 80 90
 ./urdmlMiningPartialWindows.py 10 1000 90 100
+
+./resultQuery.py > resultQuery.out

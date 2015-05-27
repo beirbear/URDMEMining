@@ -90,9 +90,9 @@ if __name__ == "__main__":
         # if i >= 3:
         #    break
 
-'''
+        '''
 Efficiency Note: The developer intend to program it easy which is trade off with the efficiency of the algorithm that need to go throught every file when the createTransaction() is called. This can be optimize, but the developer would like to point out and note to clarify why this step take certain amount of time. 
-'''
+        '''
         windowGroup.append(createTransaction(np.arange(i * int(sys.argv[1]), i * int(sys.argv[1]) + int(sys.argv[1]) , 1)))
         print("Window Frame: %s" % np.arange(i * int(sys.argv[1]), i * int(sys.argv[1]) + int(sys.argv[1]) , 1))
 

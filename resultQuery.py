@@ -15,6 +15,14 @@ RESULT_FILES = ["output/urdmeMiningPartialWindow_10_1000_0_10.json", \
 
 resultList = []
 
+'''
+def filterData(inputData, matching):
+    result = []
+    for line in inputData:
+        if matching in str(line):
+            result.append(line)
+'''
+
 if __name__ == "__main__":
     # read result file one by one
     for _file in RESULT_FILES:
@@ -32,8 +40,8 @@ if __name__ == "__main__":
                     quit()
 
                 content = data[0][0]
-                
-                sortedResult = sorted(content, key=lambda x: x['_value'])
+                ''' 
+                sortedResult = sorted(content, key=lambda x: x['_value'], reverse=True)
                 print("First")
                 print(sortedResult[0])
                 print(sortedResult[1])
@@ -47,10 +55,11 @@ if __name__ == "__main__":
                 print(sortedResult[-3])
                 print(sortedResult[-2])
                 print(sortedResult[-1])
-
-                for bandValue in range(9):
-                    filteredResult = filter(lambda x: True if 'B'+str(bandValue) in str(x['_key']) else False, content)
-                    sortedFilterResult = sorted(filteredResult, key=lambda x: x['_value'])
+                '''
+                # for bandValue in reversed(range(9)):
+                for bandValue in [8]:
+                    filteredResult = filter(lambda x: True if ('protein_B'+str(bandValue)) in str(x['_key']) else False, content)
+                    sortedFilterResult = sorted(filteredResult, key=lambda x: x['_value'], reverse=True)
                     print("B" + str(bandValue) + " First")
                     if len(sortedFilterResult) >= 5:
                         print(sortedFilterResult[0])
@@ -73,4 +82,4 @@ if __name__ == "__main__":
                         for j in reversed(range(1,len(sortedFilterResult))):
                             print(sortedFilterResult[j * -1])
                         
-        print('\n\n\n')
+        print('------------------------------------------------------------------------------------------')
