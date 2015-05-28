@@ -3,7 +3,7 @@
 import json
 import numpy as ns
 
-INPUT_FILE = "moldsParaExtracted.djson"
+INPUT_FILE = "data/moldsParaExtracted.djson"
 
 # Global Variables
 k1 = list()
